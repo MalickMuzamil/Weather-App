@@ -1,0 +1,87 @@
+.background-image {
+    background-image: url("../../images/city.jpg");
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    
+}
+
+.blur-overlay {
+    backdrop-filter: blur(2px);
+    height: 100%;
+    transition: all 0.8s ease-in-out;
+}
+
+.background-border {
+    border: 1px solid white;
+    padding: 10px 20px !important;
+    border-radius: 13px !important;
+    /* background: rgba(255, 255, 255, 0.2) !important; */
+    box-shadow: 15px 29px 37px rgba(124, 123, 124, 0.6) !important;
+    max-width: 100%;
+    box-sizing: border-box;
+    transition: height 0.8s ease-in-out, width 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.positions-row {
+    position: relative;
+}
+
+.cloud-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+    height: 35px;
+}
+
+.time-text {
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    z-index: 1;
+    color: white;
+}
+
+.cards {
+    padding: 5% !important;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.form-control {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .cloud-image {
+        height: 25px;
+    }
+
+    .time-text {
+        font-size: 1.2rem;
+    }
+
+    .background-border {
+        padding: 10px;
+    }
+}
+
+/* Custom input styling */
+.custom-input {
+    border-radius: 20px !important;
+    padding: 10px 15px !important;
+    font-size: 1rem !important;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.custom-input:focus {
+    border-color: #007bff !important; 
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25) !important; 
+}
+
+.container-fluid.pxx-0 {
+    transition: all 0.8s ease-in-out; 
+}
