@@ -34,7 +34,7 @@
 
 ### 📥 Clone the repository
 
-1- git clone https://github.com/your-username/mern-weather-app.git
+1- git clone https://github.com/MalickMuzamil/mern-weather-app.git
 
 2- cd Weather-App
 
@@ -61,21 +61,35 @@
 
 3- MONGO_URI=your_mongodb_uri
 
- 
+---
+
 ### 📁 Project Structure
+
 Weather-App/
+
 ├── client/              # React frontend
+
 │   ├── src/
+
 │   │   ├── components/
+
 │   │   ├── pages/
+
 │   │   └── services/
+
 ├── server/              # Node/Express backend
+
 │   ├── routes/
+
 │   ├── controllers/
+
 │   ├── models/
+
 │   └── middleware/
+
 └── README.md
 
+---
 
 ## 📚 Learnings
 ✅ How to integrate real-time APIs with MERN stack
@@ -88,11 +102,15 @@ Weather-App/
 
 ✅ Clean UI design for weather data visualization
 
+---
+
 ## 🧑‍💻 Author
 
 Made with ❤️ by MalickMuzamil
 
-<!-- 📧 Email: malikmuzamil92110@example.com | 💼 LinkedIn: linkedin.com/in/malik-muzamil -->
+ 📧 Email: malikmuzamil92110@example.com 
+
+💼 LinkedIn: linkedin.com/in/malik-muzamil
 
 
 **“Wherever you go, no matter what the weather, always bring your own sunshine.”**
