@@ -1,22 +1,22 @@
 import React from 'react'
 import './Card2.css'
+import { motion } from "framer-motion";
 
 
-export default function Card2({ title, data }) {
+export default function Card2({ items=[] }) {
 
 
     return (
-        <>
-            <div className='card2'>
-                <div className='card2-title'>
-                    {title}
+        <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="d-flex flex-wrap section-gap"
+        >
+            {items.map((it, idx) => (
+                <div key={idx} className="now-badge">
+                    <strong>{it.label}:</strong> {it.value}
                 </div>
-
-                <div className='card2-text'>
-                    {data ? data : "No data available"}
-                </div>
-
-            </div>
-        </>
-    )
+            ))}
+        </motion.div>
+    );
 }

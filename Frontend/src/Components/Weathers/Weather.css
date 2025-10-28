@@ -1,87 +1,65 @@
+/* Weather App background effects */
+
 .background-image {
-    background-image: url("../../images/city.jpg");
-    height: 100vh;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    overflow: hidden;
-    
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #001d3d, #003566, #00b4d8, #90e0ef);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  overflow: hidden;
+  position: relative;
 }
 
-.blur-overlay {
-    backdrop-filter: blur(2px);
-    height: 100%;
-    transition: all 0.8s ease-in-out;
+/* moving gradient animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
+/* optional animated light fog overlay */
+.background-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 60%),
+              radial-gradient(circle at 70% 70%, rgba(255,255,255,0.08) 0%, transparent 60%);
+  animation: fogDrift 20s linear infinite;
+}
+@keyframes fogDrift {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(-30px, 20px); }
+  100% { transform: translate(0,0); }
+}
+
+/* glass container */
 .background-border {
-    border: 1px solid white;
-    padding: 10px 20px !important;
-    border-radius: 13px !important;
-    /* background: rgba(255, 255, 255, 0.2) !important; */
-    box-shadow: 15px 29px 37px rgba(124, 123, 124, 0.6) !important;
-    max-width: 100%;
-    box-sizing: border-box;
-    transition: height 0.8s ease-in-out, width 0.8s ease-in-out, transform 0.8s ease-in-out;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  transition: transform 0.4s ease;
+}
+.background-border:hover {
+  transform: scale(1.02);
 }
 
-.positions-row {
-    position: relative;
-}
-
-.cloud-image {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 1;
-    height: 35px;
-}
-
-.time-text {
-    position: absolute;
-    top: 10px;
-    left: 60px;
-    z-index: 1;
-    color: white;
-}
-
-.cards {
-    padding: 5% !important;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.form-control {
-    max-width: 100%;
-}
-
-@media (max-width: 768px) {
-    .cloud-image {
-        height: 25px;
-    }
-
-    .time-text {
-        font-size: 1.2rem;
-    }
-
-    .background-border {
-        padding: 10px;
-    }
-}
-
-/* Custom input styling */
+/* rest of your existing tweaks */
+.positions-row { position: relative; }
+.cards { background: rgba(255,255,255,0.08); padding: 5%; }
 .custom-input {
-    border-radius: 20px !important;
-    padding: 10px 15px !important;
-    font-size: 1rem !important;
-    border: 1px solid #ced4da;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+  border-radius: 20px !important;
+  padding: 10px 15px !important;
+  font-size: 1rem !important;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
-
 .custom-input:focus {
-    border-color: #007bff !important; 
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25) !important; 
-}
-
-.container-fluid.pxx-0 {
-    transition: all 0.8s ease-in-out; 
+  border-color: #00b4d8 !important;
+  box-shadow: 0 0 0 0.25rem rgba(0,180,216,0.25) !important;
 }

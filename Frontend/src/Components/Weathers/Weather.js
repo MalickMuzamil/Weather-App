@@ -1,106 +1,137 @@
-import React, { useState, useEffect } from 'react';
-import './Weather.css';
-import img from "../../images/forecast.png";
-import Card from '../Cards/Card';
+import { useState, useEffect } from "react";
 import axios from "axios";
-import Card2 from '../Card-Data-display/Card2';
+import { motion } from "framer-motion";
+import {
+    WiCloud,
+    WiHumidity,
+    WiBarometer,
+    WiStrongWind,
+    WiThermometer,
+} from "react-icons/wi";
+import { FaSearch } from "react-icons/fa";
+import { InputGroup, Form, Button, Row, Col } from "react-bootstrap";
+import Card from "../Cards/Card";
+
+import { toast } from "react-toastify";
 
 export default function Weather() {
-    const [time, setTime] = useState(new Date());
-    const [search, setSearch] = useState('');
-    const [weather, setWeather] = useState("")
+    const [city, setCity] = useState("Karachi");
+    const [weather, setWeather] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const fetchWeather = async () => {
+        if (!city) {
+            toast.warn("Please enter a city name first!");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const res = await axios.get(
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=9accb3aec4ff83f01e4441dbbfe2d744&units=metric`
+            );
+            const data = res.data;
+            setWeather({
+                name: data.name,
+                temp: Math.round(data.main.temp),
+                humidity: data.main.humidity,
+                pressure: data.main.pressure,
+                wind: data.wind.speed,
+                description: data.weather[0].description,
+            });
+            toast.success(`Weather data loaded for ${data.name}!`);
+        } catch (err) {
+            console.error(err);
+            setWeather(null);
+
+            if (err.response && err.response.data && err.response.data.message) {
+                toast.error(`Error: ${err.response.data.message}`);
+            } else {
+                toast.error("Failed to fetch weather data. Please try again.");
+            }
+        }
+        setLoading(false);
+    };
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setTime(new Date());
-        }, 1000);
-
-        return () => clearInterval(interval);
+        fetchWeather();
     }, []);
 
-
-    const handleChanged = (e) => {
-        console.log(e.target.value)
-        setSearch(e.target.value)
-    }
-
-    const onHandleSubmit = async (e) => {
-
-        e.preventDefault();
-
-        console.log("input :", search)
-        const url = "/search"
-
-        if (search === "") {
-            alert("Invalid Input Fid")
-        }
-
-        else {
-            let body = {
-                inputValue: search
-            }
-
-
-            const response = await axios.post(`http://localhost:3001${url}`, body)
-            console.log(response)
-
-            setSearch(' ')
-            setWeather(" ")
-
-            if (response.status === 200) {
-                setWeather(response.data.weather);
-            }
-
-            else {
-                console.log("Function shi nai chl rha.")
-            }
-        }
-
-    }
-
     return (
-        <>
-            <div className='background-image container-fluid pxx-0'>
-                <div className='container blur-overlay d-flex justify-content-center align-items-center'>
-                    <div className='row background-border cards' >
-                        <div className='row align-items-center justify-content-center positions-row mb-5'>
-                            <div className='col-5'>
-                                <img src={img} alt="Weather Forecast" className='cloud-image' />
-                            </div>
-                            <div className='col-7'>
-                                <h4 className='text-start text-white time-text'>{time.toLocaleTimeString()}</h4>
-                            </div>
-                        </div>
-
-                        <form onSubmit={onHandleSubmit}>
-                            <div className='d-flex justify-content-center my-5'>
-                                <input
-                                    type="text"
-                                    placeholder='Search City....'
-                                    className='form-control custom-input w-50'
-                                    value={search}
-                                    onChange={handleChanged}
-                                />
-                            </div>
-                        </form>
-
-                        <div className="row justify-content-around my-3 px-0">
-                            <div className="col-md-4 pe-0">
-                                <Card2 title="Temperature" data={weather && weather.temp} />
-                            </div>
-                            <div className="col-md-4 pe-0">
-                                <Card2 title="Humidity" data={weather && weather.humidity} />
-                            </div>
-                            <div className="col-md-4 pe-0">
-                                <Card2 title="Pressure" data={weather && weather.pressure} />
-                            </div>
-                        </div>
-
-                        <Card weather={weather} />
-
-                    </div>
-                </div>
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="text-center mb-4">
+                <WiCloud size={70} />
+                <h2 className="fw-bold text-gradient">WeatherNow</h2>
+                <p className="muted fw-bold mb-0">{new Date().toLocaleTimeString()}</p>
             </div>
-        </>
-    )
+
+            <InputGroup className="mb-4">
+                <Form.Control
+                    placeholder="Search City..."
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="custom-input"
+                />
+                <Button onClick={fetchWeather} disabled={loading} variant="info">
+                    {loading ? "Loading..." : <FaSearch />}
+                </Button>
+            </InputGroup>
+
+            {weather ? (
+                <>
+                    <motion.div
+                        className="text-center mb-4"
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h3 className="fw-bold">{weather.name}</h3>
+                        <h1 className="display-4 fw-bold">{weather.temp}°C</h1>
+                        <p className="text-capitalize muted">{weather.description}</p>
+                    </motion.div>
+
+                    <Row className="g-3">
+                        {[
+                            {
+                                icon: <WiThermometer />,
+                                label: "Temperature",
+                                value: `${weather.temp}°C`,
+                            },
+                            {
+                                icon: <WiHumidity />,
+                                label: "Humidity",
+                                value: `${weather.humidity}%`,
+                            },
+                            {
+                                icon: <WiBarometer />,
+                                label: "Pressure",
+                                value: `${weather.pressure} hPa`,
+                            },
+                            {
+                                icon: <WiStrongWind />,
+                                label: "Wind",
+                                value: `${weather.wind} m/s`,
+                            },
+                        ].map((item, i) => (
+                            <Col key={i} xs={12} sm={6} md={3}>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: i * 0.1 }}
+                                >
+                                    <Card
+                                        icon={item.icon}
+                                        label={item.label}
+                                        value={item.value}
+                                    />
+                                </motion.div>
+                            </Col>
+                        ))}
+                    </Row>
+                </>
+            ) : (
+                <p className="text-center mt-4 text-light">No weather data available</p>
+            )}
+        </motion.div>
+    );
 }

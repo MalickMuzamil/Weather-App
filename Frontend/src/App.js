@@ -1,17 +1,36 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Weather from './Components/Weathers/Weather'
+
+import Container from "react-bootstrap/Container";
+import Weather from "./Components/Weathers/Weather";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
-      
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Weather />}>
-            </Route>
-          </Routes>
-        </BrowserRouter>
+      <Container fluid className="d-flex align-items-center justify-content-center min-vh-100 position-relative overflow-hidden">
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+
+        <div className="glass p-4 p-md-5 w-100" style={{ maxWidth: 1000 }}>
+          <Weather />
+        </div>
+      </Container>
+
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
     </>
   );
 }
