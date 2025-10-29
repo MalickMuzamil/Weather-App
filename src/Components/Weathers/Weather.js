@@ -15,7 +15,7 @@ import Card from "../Cards/Card";
 import { toast } from "react-toastify";
 
 export default function Weather() {
-    const [city, setCity] = useState("Karachi");
+    const [city, setCity] = useState("");
     const [weather, setWeather] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -54,11 +54,10 @@ export default function Weather() {
     };
 
     useEffect(() => {
-        fetchWeather();
     }, []);
 
     return (
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}>
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}   className="weather-container">
             <div className="text-center mb-4">
                 <WiCloud size={70} />
                 <h2 className="fw-bold text-gradient">WeatherNow</h2>

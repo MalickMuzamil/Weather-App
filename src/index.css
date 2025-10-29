@@ -13,7 +13,8 @@ html, body, #root { height: 100%; }
 body {
   font-family: "Poppins", sans-serif;
   color: var(--text);
-  overflow: hidden;
+  overflow-y: auto;        /* allow vertical scroll */
+  min-height: 100vh;       /* page can grow with content */
   position: relative;
 
   background: linear-gradient(135deg, #0a192f, #003566, #0077b6, #00b4d8, #90e0ef);

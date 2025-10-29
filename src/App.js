@@ -15,7 +15,7 @@ function App() {
         <div className="dot"></div>
         <div className="dot"></div>
 
-        <div className="glass p-4 p-md-5 w-100" style={{ maxWidth: 1000 }}>
+        <div className="glass p-4 p-md-5 w-100 my-5" style={{ maxWidth: 1000 }}>
           <Weather />
         </div>
       </Container>
